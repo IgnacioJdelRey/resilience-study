@@ -16,7 +16,7 @@ footer {visibility: hidden;}
 #this is the header
 t1, t2 = st.columns((0.3,1)) 
 
-t1.image('./logo.png', width = 250)
+t1.image('images/logo.png', width = 250)
 t2.header('Individual Resilience Prediction webapp')
 
 t2.write('''
