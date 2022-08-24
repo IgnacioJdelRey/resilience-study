@@ -35,5 +35,8 @@ st.write('---')
 #TILS para calcular LONELI
 st.header('Three-Item Loneliness Scale')
 tils_1 = st.radio('¿Con qué frecuencia sientes que te falta compañía?', ('Casi nunca', 'A veces', 'A menudo'))
+print(tils_1)
 tils_2 = st.radio('¿Con qué frecuencia te sientes excluido?', ('Casi nunca', 'A veces', 'A menudo'))
+print(tils_2)
 tils_3 = st.radio('¿Con qué frecuencia se siente aislado de los demás?', ('Casi nunca', 'A veces', 'A menudo'))
+print(tils_3)
