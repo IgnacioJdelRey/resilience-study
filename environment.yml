@@ -1,4 +1,16 @@
-name: env
+name: /Users/ignacio/Documents/covid/resilience-study/env
 channels:
   - defaults
-prefix: /opt/anaconda3/envs/env
+dependencies:
+  - numpy
+  - jupyter
+  - scikit-learn
+  - matplotlib
+  - seaborn
+  - ipython
+  - pandas
+  - pyreadstat
+  - category_encoders
+  - streamlit
+  - plotly
+prefix: /Users/ignacio/Documents/covid/resilience-study/env
