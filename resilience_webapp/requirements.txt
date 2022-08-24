@@ -3,4 +3,3 @@ plotly
 numpy
 scikit-learn
 category_encoders
-pickle
