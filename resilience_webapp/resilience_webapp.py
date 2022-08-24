@@ -2,6 +2,8 @@ import streamlit as st
 import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
+import pickle
+from sklearn.ensemble import RandomForestClassifier
 
 #page configuration
 st.set_page_config(page_title='Individual Resilience Prediction webapp', page_icon='🧗')
@@ -16,7 +18,7 @@ footer {visibility: hidden;}
 #this is the header
 t1, t2 = st.columns((0.3,1)) 
 
-t1.image('images/logo.png', width = 250)
+t1.image('../resilience_webapp/images/logo.png', width = 250)
 t2.header('Individual Resilience Prediction webapp')
 
 t2.write('''
