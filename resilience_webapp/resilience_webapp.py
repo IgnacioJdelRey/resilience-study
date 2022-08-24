@@ -7,7 +7,7 @@ from sklearn.ensemble import RandomForestClassifier
 import os
 
 path = os.path.dirname(__file__)
-logo_file = path + 'images/logo.png'
+logo_file = path + '/images/logo.png'
 
 #page configuration
 st.set_page_config(page_title='Individual Resilience Prediction webapp', page_icon='🧗')
