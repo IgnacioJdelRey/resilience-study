@@ -21,7 +21,13 @@ t2.header('Individual Resilience Prediction webapp')
 
 t2.write('''
 A continuación puedes contestar a los siguientes cuestionarios para conocer la predicción sobre tu resiliencia:
-* **Cuestionario 1:** es un cuestionario.
+* **TILS:** Three-Item Loneliness Scale (TILS; Hughes, Waite, Hawkley & Cacioppo, 2004).
 * **Cuestionario 2:** es otro cuestionario.
         ''')
 st.write('---')
+
+#TILS para calcular LONELI
+st.header('Three-Item Loneliness Scale')
+tils_1 = st.radio('¿Con qué frecuencia sientes que te falta compañía?', ('Casi nunca', 'A veces', 'A menudo'))
+tils_2 = st.radio('¿Con qué frecuencia te sientes excluido?', ('Casi nunca', 'A veces', 'A menudo'))
+tils_3 = st.radio('¿Con qué frecuencia se siente aislado de los demás?', ('Casi nunca', 'A veces', 'A menudo'))
