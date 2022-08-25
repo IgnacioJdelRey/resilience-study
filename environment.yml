@@ -13,4 +13,5 @@ dependencies:
   - category_encoders
   - streamlit
   - plotly
+  - treeinterpreter
 prefix: /Users/ignacio/Documents/covid/resilience-study/env
