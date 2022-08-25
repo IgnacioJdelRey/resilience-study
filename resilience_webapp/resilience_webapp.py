@@ -5,6 +5,7 @@ import plotly.express as px
 import plotly.graph_objects as go
 import pickle
 from sklearn.ensemble import RandomForestClassifier
+from treeinterpreter import treeinterpreter as ti
 import os
 
 path = os.path.dirname(__file__)
@@ -439,10 +440,23 @@ st.write(instance)
 #load the model from disk
 model_filename = path + '/RandomForestClassifier_NoCovidFeatures_Webapp_model.sav'
 loaded_model = pickle.load(open(model_filename, 'rb'))
-rf = loaded_model.steps[1][1]
 
-prediction = rf.predict_proba(instance)
-st.write(prediction)
+#make prediction
+prediction_class = loaded_model.predict(instance)
+prediction_proba = loaded_model.predict_proba(instance)
+
+#find feature contributions
+prediction_ti, bias, contributions = ti.predict(loaded_model, instance)
+st.write('Prediction', prediction_ti)
+st.write('Bias (trainset prior)', bias)
+st.write('Feature contributions:')
+for c, feature in zip(contributions[0], loaded_model.feature_names_in_):
+	st.write(feature, c)
+
+if prediction_class == 0:
+	st.write('No eres resiliente, con un score de predicción igual a', round(prediction_proba[0, 0], 2))
+elif prediction_class == 1:
+	st.write('Eres resiliente, con un score de predicción igual a', round(prediction_proba[0, 1], 2))
 
 #def predecir_resiliencia(instance_vector):
 
