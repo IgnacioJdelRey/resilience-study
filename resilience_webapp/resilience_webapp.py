@@ -459,57 +459,60 @@ prediction_proba = loaded_model.predict_proba(instance)
 prediction_ti, bias, contributions = ti.predict(loaded_model[-1], loaded_model[:-1].transform(instance))
 
 #prepare results to plot and interpret them in a waterfall chart
+fig_x = []
+negative_values_index = []
+for i, element in enumerate(contributions[0][:, 1:].tolist()):
+	fig_x.append(element[0] * 100)
+	if element[0] < 0:
+		negative_values_index.append((i, element[0] * 100))
+
+fig_x.append(bias[0][1] * 100 + sum(fig_x))
+fig_x.insert(0, bias[0][1] * 100)
+
+fig_y = ['Prior', 'Consumo de sustancias', 'Paranoia', 'Incertidumbre', 'Felicidad', 'Soledad', 'Ansiedad por la muerte', 'Afrontamiento dificultades', 'Apertura al futuro', 'Predicción']
+
 if prediction_class == 1:
-    fig_y = []
-    for i, element in enumerate(contributions[0][:, 1:].tolist()):
-        fig_y.append(contributions[0][:, 1:].tolist()[i][0])
-    fig_y.append(bias[0][1] + sum(fig_y))
-    fig_y.insert(0, bias[0][1])
-    st.write('Eres resiliente, con un score de predicción igual a', round(prediction_proba[0, 1], 2))
-
-	# for testing purposes
-    #st.write('Class 0 prediction', prediction_ti[0][0])
-    #st.write('Class 1 prediction', prediction_ti[0][1])
-    #st.write('Class 0 bias (trainset prior)', bias[0][0])
-    #st.write('Class 1 bias (trainset prior)', bias[0][1])
-    #st.write('Feature contributions (with bias and total probability added):', fig_y)
+	st.write(f'Tu score de resiliencia es del {round(prediction_proba[0, 1], 3):.1%}. En este momento eres resiliente!')
+	st.write('Los factores que más han impactado en reducir tu resiliencia son, en orden:')
+	for value in sorted(negative_values_index, key = lambda tup: tup[1]):
+		st.write('-', fig_y[value[0] + 1], round(fig_x[value[0] + 1], 1), '%')
 else:
-    fig_y = []
-    for i, element in enumerate(contributions[0][:, 0:1].tolist()):
-        fig_y.append(contributions[0][:, 0:1].tolist()[i][0])
-    fig_y.append(bias[0][0] + sum(fig_y))
-    fig_y.insert(0, bias[0][0])
-    st.write('No eres resiliente, con un score de predicción igual a', round(prediction_proba[0, 0], 2))
+	st.write(f'Tu score de resiliencia es del {round(prediction_proba[0, 1], 3):.1%}. En este momento no eres resiliente.')
+	st.write('Los factores que más han impactado en reducir tu resiliencia son, en orden')
+	for value in sorted(negative_values_index, key = lambda tup: tup[1]):
+		st.write('-', fig_y[value[0] + 1], round(fig_x[value[0] + 1], 1), '%')
 
-	# for testing purposes
-    #st.write('Class 0 prediction', prediction_ti[0][0])
-    #st.write('Class 1 prediction', prediction_ti[0][1])
-    #st.write('Class 0 bias (trainset prior)', bias[0][0])
-    #st.write('Class 1 bias (trainset prior)', bias[0][1])
-    #st.write('Feature contributions (with bias and total probability added):', fig_y)
+# for testing purposes
+#st.write('Class 0 prediction', prediction_ti[0][0])
+#st.write('Class 1 prediction', prediction_ti[0][1])
+#st.write('Class 0 bias (trainset prior)', bias[0][0])
+#st.write('Class 1 bias (trainset prior)', bias[0][1])
+#st.write('Feature contributions (with bias and total probability added):', fig_y)
 
 fig = go.Figure(go.Waterfall(
-    name = 'Feature contribution', orientation = 'v',
+    name = 'Feature contribution', orientation = 'h',
     measure = ['relative', 'relative', 'relative', 'relative', 'relative', 'relative', 'relative', 'relative', 'relative', 'total'],
-    x = ['Bias', 'Consumo de sustancias', 'Paranoia', 'Incertidumbre', 'Felicidad', 'Soledad', 'Ansiedad por la muerte', 'Afrontamiento dificultades', 'Apertura al futuro', 'Probabilidad'],
-    textposition = 'outside',
-    text = list(map(str, [round(num, 3) for num in fig_y])),
     y = fig_y,
+    textposition = 'outside',
+    text = list(map(str, [round(num, 1) for num in fig_x])),
+    x = fig_x,
     connector = {'line':{'color':'rgb(63, 63, 63)',
 				         'width': 1},
 				 'visible': False},
 ))
 
-fig.update_yaxes(range = [0, 1])
+fig.update_yaxes(autorange = 'reversed', fixedrange = True)
+fig.update_xaxes(range = [0, 100], fixedrange = True)
 fig.update_layout(
-        title = 'Feature contribution',
-        showlegend = False
+        title = 'Impacto de los factores en la estimación del score de resiliencia',
+        showlegend = False,
+		hovermode = 'y',
+		xaxis_ticksuffix= '%'
 )
+fig.update_traces(hovertemplate = '%{y}: %{text}%<extra></extra>',
+				  texttemplate='%{text}%')
+
+st.write('A continuación se muestra un gráfico que resume la contribución de cada factor:')
 
 config = {'displayModeBar': False}
 st.plotly_chart(fig, use_container_width = True, config = config)
-
-#def predecir_resiliencia(instance_vector):
-
-
-#st.button('Predecir mi resiliencia', )
