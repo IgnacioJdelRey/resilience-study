@@ -13,10 +13,8 @@ from sklearn.preprocessing import StandardScaler
 
 from sklearn import set_config
 from sklearn.model_selection import RandomizedSearchCV
-
-
-
 from treeinterpreter import treeinterpreter as ti
+
 import os
 
 path = os.path.dirname(__file__)
@@ -446,7 +444,8 @@ instance = pd.DataFrame(data = {'SUBSTANCE_SCORE': [SUBSTANCE_SCORE],
 								}, 
 								dtype = np.float16)
 
-st.write(instance)
+# for testing purposes
+#st.write(instance)
 
 #load the model from disk
 model_filename = path + '/RandomForestClassifier_NoCovidFeatures_Webapp_model.sav'
@@ -457,17 +456,58 @@ prediction_class = loaded_model.predict(instance)
 prediction_proba = loaded_model.predict_proba(instance)
 
 #find feature contributions
-prediction_ti, bias, contributions = ti.predict(loaded_model, instance)
-st.write('Prediction', prediction_ti)
-st.write('Bias (trainset prior)', bias)
-st.write('Feature contributions:')
-for c, feature in zip(contributions[0], loaded_model.feature_names_in_):
-	st.write(feature, c)
+prediction_ti, bias, contributions = ti.predict(loaded_model[-1], loaded_model[:-1].transform(instance))
 
-if prediction_class == 0:
-	st.write('No eres resiliente, con un score de predicción igual a', round(prediction_proba[0, 0], 2))
-elif prediction_class == 1:
-	st.write('Eres resiliente, con un score de predicción igual a', round(prediction_proba[0, 1], 2))
+#prepare results to plot and interpret them in a waterfall chart
+if prediction_class == 1:
+    fig_y = []
+    for i, element in enumerate(contributions[0][:, 1:].tolist()):
+        fig_y.append(contributions[0][:, 1:].tolist()[i][0])
+    fig_y.append(bias[0][1] + sum(fig_y))
+    fig_y.insert(0, bias[0][1])
+    st.write('Eres resiliente, con un score de predicción igual a', round(prediction_proba[0, 1], 2))
+
+	# for testing purposes
+    #st.write('Class 0 prediction', prediction_ti[0][0])
+    #st.write('Class 1 prediction', prediction_ti[0][1])
+    #st.write('Class 0 bias (trainset prior)', bias[0][0])
+    #st.write('Class 1 bias (trainset prior)', bias[0][1])
+    #st.write('Feature contributions (with bias and total probability added):', fig_y)
+else:
+    fig_y = []
+    for i, element in enumerate(contributions[0][:, 0:1].tolist()):
+        fig_y.append(contributions[0][:, 0:1].tolist()[i][0])
+    fig_y.append(bias[0][0] + sum(fig_y))
+    fig_y.insert(0, bias[0][0])
+    st.write('No eres resiliente, con un score de predicción igual a', round(prediction_proba[0, 0], 2))
+
+	# for testing purposes
+    #st.write('Class 0 prediction', prediction_ti[0][0])
+    #st.write('Class 1 prediction', prediction_ti[0][1])
+    #st.write('Class 0 bias (trainset prior)', bias[0][0])
+    #st.write('Class 1 bias (trainset prior)', bias[0][1])
+    #st.write('Feature contributions (with bias and total probability added):', fig_y)
+
+fig = go.Figure(go.Waterfall(
+    name = 'Feature contribution', orientation = 'v',
+    measure = ['relative', 'relative', 'relative', 'relative', 'relative', 'relative', 'relative', 'relative', 'relative', 'total'],
+    x = ['Bias', 'Consumo de sustancias', 'Paranoia', 'Incertidumbre', 'Felicidad', 'Soledad', 'Ansiedad por la muerte', 'Afrontamiento dificultades', 'Apertura al futuro', 'Probabilidad'],
+    textposition = 'outside',
+    text = list(map(str, [round(num, 3) for num in fig_y])),
+    y = fig_y,
+    connector = {'line':{'color':'rgb(63, 63, 63)',
+				         'width': 1},
+				 'visible': False},
+))
+
+fig.update_yaxes(range = [0, 1])
+fig.update_layout(
+        title = 'Feature contribution',
+        showlegend = False
+)
+
+config = {'displayModeBar': False}
+st.plotly_chart(fig, use_container_width = True, config = config)
 
 #def predecir_resiliencia(instance_vector):
 
