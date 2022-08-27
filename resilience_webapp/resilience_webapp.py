@@ -4,15 +4,13 @@ import numpy as np
 import plotly.express as px
 import plotly.graph_objects as go
 import pickle
-from sklearn.ensemble import RandomForestClassifier
 
+from sklearn.ensemble import RandomForestClassifier
 from sklearn.pipeline import Pipeline
 from sklearn.compose import ColumnTransformer
 from category_encoders import TargetEncoder
 from sklearn.preprocessing import StandardScaler
 
-from sklearn import set_config
-from sklearn.model_selection import RandomizedSearchCV
 from treeinterpreter import treeinterpreter as ti
 
 import os
