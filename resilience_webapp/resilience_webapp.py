@@ -1,5 +1,4 @@
 import streamlit as st
-import streamlit.components.v1 as components
 
 import pandas as pd
 import numpy as np
@@ -29,19 +28,6 @@ st.markdown("""
 #MainMenu {visibility: hidden;}
 footer {visibility: hidden;}
 </style> """, unsafe_allow_html=True)
-
-#so we the webapp loads at top
-if 'page' not in st.session_state:
-    st.session_state.page = 1
-components.html(
-    f"""
-        <p>{st.session_state.page}</p>
-        <script>
-            window.parent.document.querySelector('section.main').scrollTo(0, 0);
-        </script>
-    """,
-    height=0
-)
 
 #this is the header
 t1, t2 = st.columns((0.3,1)) 
