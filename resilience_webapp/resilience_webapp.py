@@ -17,19 +17,6 @@ from treeinterpreter import treeinterpreter as ti
 
 import os
 
-#so we the webapp loads at top
-if 'page' not in st.session_state:
-    st.session_state.page = 1
-components.html(
-    f"""
-        <p>{st.session_state.page}</p>
-        <script>
-            window.parent.document.querySelector('section.main').scrollTo(0, 0);
-        </script>
-    """,
-    height=0
-)
-
 path = os.path.dirname(__file__)
 logo_filename = path + '/images/logo.png'
 
@@ -42,6 +29,19 @@ st.markdown("""
 #MainMenu {visibility: hidden;}
 footer {visibility: hidden;}
 </style> """, unsafe_allow_html=True)
+
+#so we the webapp loads at top
+if 'page' not in st.session_state:
+    st.session_state.page = 1
+components.html(
+    f"""
+        <p>{st.session_state.page}</p>
+        <script>
+            window.parent.document.querySelector('section.main').scrollTo(0, 0);
+        </script>
+    """,
+    height=0
+)
 
 #this is the header
 t1, t2 = st.columns((0.3,1)) 
