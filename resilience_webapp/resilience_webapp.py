@@ -1,4 +1,6 @@
 import streamlit as st
+import streamlit.components.v1 as components
+
 import pandas as pd
 import numpy as np
 import plotly.express as px
@@ -15,11 +17,24 @@ from treeinterpreter import treeinterpreter as ti
 
 import os
 
+#so we the webapp loads at top
+if 'page' not in st.session_state:
+    st.session_state.page = 1
+components.html(
+    f"""
+        <p>{st.session_state.page}</p>
+        <script>
+            window.parent.document.querySelector('section.main').scrollTo(0, 0);
+        </script>
+    """,
+    height=0
+)
+
 path = os.path.dirname(__file__)
 logo_filename = path + '/images/logo.png'
 
 #page configuration
-st.set_page_config(page_title='Individual Resilience Prediction webapp', page_icon='🧗')
+st.set_page_config(page_title='Individual Resilience Prediction webapp', page_icon='💪')
 
 st.markdown("""
 <style>
