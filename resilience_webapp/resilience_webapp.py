@@ -471,12 +471,15 @@ fig_x.insert(0, bias[0][1] * 100)
 fig_y = ['Prior', 'Consumo de sustancias', 'Paranoia', 'Incertidumbre', 'Felicidad', 'Soledad', 'Ansiedad por la muerte', 'Afrontamiento dificultades', 'Apertura al futuro', 'Predicción']
 
 if prediction_class == 1:
-	st.write(f'Tu score de resiliencia es del {round(prediction_proba[0, 1], 3):.1%}. En este momento eres resiliente!')
-	st.write('Los factores que más han impactado en reducir tu resiliencia son, en orden:')
-	for value in sorted(negative_values_index, key = lambda tup: tup[1]):
-		st.write('-', fig_y[value[0] + 1], round(fig_x[value[0] + 1], 1), '%')
+	st.write(f'Tu score de resiliencia es del {round(prediction_proba[0, 1], 3):.1%}. Estás bien preparado para afrontar contextos difíciles en las próximas semanas.')
+	if len(negative_values_index) > 0:
+		st.write('Los factores que más han impactado en reducir tu resiliencia son, en orden:')
+		for value in sorted(negative_values_index, key = lambda tup: tup[1]):
+			st.write('-', fig_y[value[0] + 1], round(fig_x[value[0] + 1], 1), '%')
+	else:
+		st.write('No existe ningún factor que tenga un impacto negativo en tu capacidad de resiliencia.')
 else:
-	st.write(f'Tu score de resiliencia es del {round(prediction_proba[0, 1], 3):.1%}. En este momento no eres resiliente.')
+	st.write(f'Tu score de resiliencia es del {round(prediction_proba[0, 1], 3):.1%}. Tienes un riesgo alto de no poder afrontar positivamente contextos difíciles en las próximas semanas.')
 	st.write('Los factores que más han impactado en reducir tu resiliencia son, en orden')
 	for value in sorted(negative_values_index, key = lambda tup: tup[1]):
 		st.write('-', fig_y[value[0] + 1], round(fig_x[value[0] + 1], 1), '%')
