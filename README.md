@@ -22,12 +22,11 @@ In recent years there has been an increase in research on the use of machine lea
 
 ### Instructions to replicate this work
 - Clone this repository
-- Read the report provided (resilience_study_report.pdf)
+- Read the research report
 - Create a work environment using the file environment.yml provided
-- Download survey data from 
-- Run notebooks in the following order:
+- Download to the main folder the survey data from https://drive.google.com/file/d/1OL8P7WU8emZ542eZ4jVga43eqwvRnaIP/view?usp=sharing
+- Run the notebooks in the following order:
     - 01_dataselection.ipynb
     - 02_modeling.ipynb
     - 03_interpretation.ipynb
 - Visit https://ignaciojdelrey-resili-resilience-webappresilience-webapp-iu553f.streamlitapp.com/
-
