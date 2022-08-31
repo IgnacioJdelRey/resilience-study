@@ -13,7 +13,6 @@ This line of research is being addressed by a team led by Dr. Carmen Valiente an
 Their study investigated the role of sociodemographic, health, psychological, and interpersonal relationship variables in the above categories of resilience, finding through a multinomial logistic regression model that a higher probability of resilience was associated with being male, being older, having no history of mental health, and having high levels of identification with humanity and psychological well-being. In addition, low levels on other variables (anxiety and economic threat due to the pandemic, substance use during confinement, intolerance of uncertainty, death anxiety, loneliness, and distrust) were also predictors of a psychological resilience response to COVID-19.
 
 ### Goals
-
 The overall goal of this TFM is to extend the study described above, using other machine learning techniques. Specifically, the objectives are:
 - Analyze the factors with the highest predictive power and validate/extend the findings of the previous study.
 - To create a predictive model of resilience for the general population dependent only on personal characteristics, i.e., independent of context.
@@ -21,5 +20,14 @@ The overall goal of this TFM is to extend the study described above, using other
 
 In recent years there has been an increase in research on the use of machine learning methods in the field of psychology as a complement to diagnostic techniques and selection of possible therapeutic treatments. This work falls within this field of research and aims to provide new evidence on the aspects of diagnostic and treatment methodology that are likely to increase their effectiveness with the use of machine learning techniques.
 
-Instrucciones 
+### Instructions to replicate this work
+- Clone this repository
+- Read the report provided (resilience_study_report.pdf)
+- Create a work environment using the file environment.yml provided
+- Download survey data from 
+- Run notebooks in the following order:
+    - 01_dataselection.ipynb
+    - 02_modeling.ipynb
+    - 03_interpretation.ipynb
+- Visit https://ignaciojdelrey-resili-resilience-webappresilience-webapp-iu553f.streamlitapp.com/
 
