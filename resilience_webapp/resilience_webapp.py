@@ -20,7 +20,7 @@ path = os.path.dirname(__file__)
 logo_filename = path + '/images/logo.png'
 
 #page configuration
-st.set_page_config(page_title='Individual Resilience Prediction webapp', page_icon='💪')
+st.set_page_config(page_title='Herramienta para la predicción de resiliencia', page_icon='💪')
 
 st.markdown("""
 <style>
@@ -33,23 +33,24 @@ footer {visibility: hidden;}
 t1, t2 = st.columns((0.3,1)) 
 
 t1.image(logo_filename, width = 150)
-t2.header('Individual Resilience Prediction webapp')
+t2.header('Herramienta para la predicción de la capacidad resiliente próxima')
 
 t2.write('''
-A continuación puedes contestar a los siguientes cuestionarios para conocer la predicción sobre tu resiliencia:
-* **TILS:** Three-Item Loneliness Scale (TILS; Hughes, Waite, Hawkley & Cacioppo, 2004).
-* **Substance score:** Increased consumption of food, alcohol, drugs and tobacco.
-* **OFS:** Openness to the Future Scale (OFS; Botella et al., 2018).
-* **BRS:** Brief Resilience Scale (BRS; Smith et al., 2008).
-* **DAI:** Death Anxiety Inventory (DAI; Tomás-Sábado et al., 2005).
-* **IUS:** Intolerance to Uncertainty Scale (IUS; Buhr & Dufas, 2002).
-* **PHI:** Pemberton Happiness Index (PHI; Hervás and Vázquez, 2013).
-* **PTS:** Paranoid Thoughts Scale (G-PTS; Green et al., 2008).
+Bienvenido! Esta aplicación te ayudará a conocer si tienes riesgo de no poder afrontar positivamente contextos difíciles en las próximas semanas, o si por el contrario tu capacidad de resiliencia \
+está desarrollada y preparada.
+
+La aplicación te planteará de manera interactiva una serie de cuestionarios que tienen como objetivo caracterizar diferentes aspectos de tu personalidad. Lo ideal es que contestes con \
+agilidad y no te pares mucho rato en una pregunta. En total se tarda unos 10 minutos en llegar al final.
+
+Tras la última pregunta la aplicación te ofrecerá la predicción sobre tu resiliencia, así como _feedback_ sobre qué aspectos son los que más han influido en disminuir tu capacidad resiliente. Son aspectos \
+en los que puedes trabajar personalmente para fortalecer tu respuesta positiva ante situaciones adversas.
+
+Cuando estés listo, puedes comenzar!
         ''')
 st.write('---')
 
 #TILS for LONELI
-st.header('Three-Item Loneliness Scale')
+st.header('Relaciones interpersonales')
 tils_1 = st.radio('¿Con qué frecuencia sientes que te falta compañía?', ('Casi nunca', 'A veces', 'A menudo'))
 st.markdown('####')
 tils_2 = st.radio('¿Con qué frecuencia te sientes excluido?', ('Casi nunca', 'A veces', 'A menudo'))
@@ -69,7 +70,7 @@ LONELI = np.sum((int(tils_1), int(tils_2), int(tils_3)))
 st.write('---')
 
 #SUBSTANCE_SCORE
-st.header('Substance score')
+st.header('Consumo de sustancias')
 st.write('Durante las últimas 2 semanas, ¿Con qué frecuencia has tenido las siguientes experiencias?')
 subst_1 = st.radio('Has comido más de lo normal:', ('Ningún día', 'Menos de la mitad de los días', 'Más de la mitad de los días', 'Casi todos los días'))
 st.markdown('####')
@@ -96,7 +97,7 @@ SUBSTANCE_SCORE = np.mean((int(subst_1), int(subst_2), int(subst_3), int(subst_4
 st.write('---')
 
 #OFS for OFS_total
-st.header('Openness to Future Scale')
+st.header('Apertura al futuro')
 st.write('A continuación, encontrarás diferentes frases con las que te puedes sentir identificado en mayor o menor medida. Por favor, indica el grado de acuerdo o de desacuerdo que tienes con cada una de ellas.\
         Puedes arrastrar el selector:')
 
@@ -150,7 +151,7 @@ OFS_total = np.sum((int(ofs_1), int(ofs_2), int(ofs_3), int(ofs_4), int(ofs_5), 
 st.write('---')
 
 #BRS for BRS_total
-st.header('Brief Resilience Scale')
+st.header('Afrontamiento de dificultades')
 st.write('Utiliza la siguiente escala e indica para cada afirmación cuánto estás en desacuerdo o de acuerdo con cada una de las afirmaciones. Puedes arrastrar el selector:')
 
 brs_1 = st.select_slider('Tiendo a recuperarme rápidamente después de los tiempos difíciles:',
@@ -189,7 +190,7 @@ for key in brs_neg_dict.keys():
 BRS_total = np.mean((int(brs_1), int(brs_2), int(brs_3), int(brs_4), int(brs_5), int(brs_6)))
 
 #DAI for DAI_TOTAL
-st.header('Death Anxiety Inventory')
+st.header('Ansiedad por la muerte')
 st.write('Por favor, indica en qué medida estás de acuerdo con las siguientes afirmaciones. Puedes arrastrar el selector:')
 
 dai_1 = st.select_slider('La certeza de la muerte quita significado a la vida:',
@@ -223,7 +224,7 @@ DAI_TOTAL = np.sum((int(dai_1), int(dai_2), int(dai_3), int(dai_4), int(dai_5)))
 st.write('---')
 
 #IUS for IUS_total
-st.header('Intolerance to Uncertainty Scale')
+st.header('Intolerancia a la incertidumbre')
 st.write('A continuación encontrarás una serie de afirmaciones que describen cómo pueden reaccionar las personas ante las incertidumbres de la vida.\
 	Por favor, utiliza la siguiente escala para describir hasta qué punto cada elemento es característico de ti. Puedes arrastrar el selector:')
 
@@ -286,7 +287,7 @@ IUS_total = np.sum((int(ius_1), int(ius_2), int(ius_3), int(ius_4), int(ius_5), 
 st.write('---')
 
 #PHI for PEMBERTON_TOTAL
-st.header('Pemberton Happiness Index')
+st.header('Bienestar personal')
 st.write('Por favor, usando la siguiente escala del 0 al 10, donde 0 significa totalmente en desacuerdo y 10 totalmente de acuerdo, elige en qué medida estás de acuerdo con las siguientes afirmaciones. \
 	Puedes arrastrar el selector:')
 
@@ -399,7 +400,7 @@ PEMBERTON_TOTAL = np.mean((int(phi_1), int(phi_2), int(phi_3), int(phi_4), int(p
 st.write('---')
 
 #PTS for PADS_TOTAL
-st.header('Paranoid Thoughts Scale')
+st.header('Pensamientos paranoides')
 st.write('Por favor, indica hasta qué punto estás de acuerdo con las siguientes afirmaciones. Puedes arrastrar el selector:')
 
 pts_1 = st.select_slider('Mis amigos suelen decirme que deje de preocuparme por si me engañan o me hacen daño:',
@@ -432,89 +433,93 @@ PADS_TOTAL = np.sum((int(pts_1), int(pts_2), int(pts_3), int(pts_4), int(pts_5))
 
 st.write('---')
 
-instance = pd.DataFrame(data = {'SUBSTANCE_SCORE': [SUBSTANCE_SCORE],
-								'PADS_TOTAL': [PADS_TOTAL],
-								'IUS_total': [IUS_total],
-								'PEMBERTON_TOTAL': [PEMBERTON_TOTAL],
-								'LONELI': [LONELI],
-								'DAI_TOTAL': [DAI_TOTAL],
-								'BRS_total': [BRS_total],
-								'OFS_total': [OFS_total]
-								}, 
-								dtype = np.float16)
+# predicción de resiliencia con el modelo
+if st.button('Ver mi predicción'):
+	instance = pd.DataFrame(data = {'SUBSTANCE_SCORE': [SUBSTANCE_SCORE],
+									'PADS_TOTAL': [PADS_TOTAL],
+									'IUS_total': [IUS_total],
+									'PEMBERTON_TOTAL': [PEMBERTON_TOTAL],
+									'LONELI': [LONELI],
+									'DAI_TOTAL': [DAI_TOTAL],
+									'BRS_total': [BRS_total],
+									'OFS_total': [OFS_total]
+									}, 
+									dtype = np.float16)
 
-# for testing purposes
-#st.write(instance)
+	# for testing purposes
+	#st.write(instance)
 
-#load the model from disk
-model_filename = path + '/RandomForestClassifier_NoCovidFeatures_Webapp_model.sav'
-loaded_model = pickle.load(open(model_filename, 'rb'))
+	#load the model from disk
+	model_filename = path + '/RandomForestClassifier_NoCovidFeatures_Webapp_model.sav'
+	loaded_model = pickle.load(open(model_filename, 'rb'))
 
-#make prediction
-prediction_class = loaded_model.predict(instance)
-prediction_proba = loaded_model.predict_proba(instance)
+	#make prediction
+	prediction_class = loaded_model.predict(instance)
+	prediction_proba = loaded_model.predict_proba(instance)
 
-#find feature contributions
-prediction_ti, bias, contributions = ti.predict(loaded_model[-1], loaded_model[:-1].transform(instance))
+	#find feature contributions
+	prediction_ti, bias, contributions = ti.predict(loaded_model[-1], loaded_model[:-1].transform(instance))
 
-#prepare results to plot and interpret them in a waterfall chart
-fig_x = []
-negative_values_index = []
-for i, element in enumerate(contributions[0][:, 1:].tolist()):
-	fig_x.append(element[0] * 100)
-	if element[0] < 0:
-		negative_values_index.append((i, element[0] * 100))
+	#prepare results to plot and interpret them in a waterfall chart
+	fig_x = []
+	negative_values_index = []
+	for i, element in enumerate(contributions[0][:, 1:].tolist()):
+		fig_x.append(element[0] * 100)
+		if element[0] < 0:
+			negative_values_index.append((i, element[0] * 100))
 
-fig_x.append(bias[0][1] * 100 + sum(fig_x))
-fig_x.insert(0, bias[0][1] * 100)
+	fig_x.append(bias[0][1] * 100 + sum(fig_x))
+	fig_x.insert(0, bias[0][1] * 100)
 
-fig_y = ['Prior', 'Consumo de sustancias', 'Paranoia', 'Incertidumbre', 'Felicidad', 'Soledad', 'Ansiedad por la muerte', 'Afrontamiento dificultades', 'Apertura al futuro', 'Predicción']
+	fig_y = ['Prior', 'Consumo de sustancias', 'Pensamientos paranoides', 'Intolerancia a la incertidumbre', 'Bienestar personal', 'Relaciones interpersonales', 'Ansiedad por la muerte', 'Afrontamiento de dificultades', 'Apertura al futuro', 'Predicción']
 
-if prediction_class == 1:
-	st.write(f'Tu score de resiliencia es del {round(prediction_proba[0, 1], 3):.1%}. Estás bien preparado para afrontar contextos difíciles en las próximas semanas.')
-	if len(negative_values_index) > 0:
-		st.write('Los factores que más han impactado en reducir tu resiliencia son, en orden:')
+	if prediction_class == 1:
+		st.write(f'Tu score de resiliencia es del {round(prediction_proba[0, 1], 3):.1%}. Estás bien preparado para afrontar contextos difíciles en las próximas semanas.')
+		if len(negative_values_index) > 0:
+			st.write('Los factores que más han impactado en reducir tu resiliencia son, en orden:')
+			for value in sorted(negative_values_index, key = lambda tup: tup[1]):
+				st.write('-', fig_y[value[0] + 1], round(fig_x[value[0] + 1], 1), '%')
+			st.write('Son aspectos en los que puedes trabajar personalmente para fortalecer tu respuesta positiva ante situaciones adversas.')
+		else:
+			st.write('Enhorabuena, no existe ningún factor que tenga un impacto negativo en tu capacidad de resiliencia.')
+	else:
+		st.write(f'Tu score de resiliencia es del {round(prediction_proba[0, 1], 3):.1%}. Tienes un riesgo alto de no poder afrontar positivamente contextos difíciles en las próximas semanas.')
+		st.write('Los factores que más han impactado en reducir tu resiliencia son, en orden')
 		for value in sorted(negative_values_index, key = lambda tup: tup[1]):
 			st.write('-', fig_y[value[0] + 1], round(fig_x[value[0] + 1], 1), '%')
-	else:
-		st.write('No existe ningún factor que tenga un impacto negativo en tu capacidad de resiliencia.')
-else:
-	st.write(f'Tu score de resiliencia es del {round(prediction_proba[0, 1], 3):.1%}. Tienes un riesgo alto de no poder afrontar positivamente contextos difíciles en las próximas semanas.')
-	st.write('Los factores que más han impactado en reducir tu resiliencia son, en orden')
-	for value in sorted(negative_values_index, key = lambda tup: tup[1]):
-		st.write('-', fig_y[value[0] + 1], round(fig_x[value[0] + 1], 1), '%')
+		st.write('Son aspectos en los que puedes trabajar personalmente para fortalecer tu respuesta positiva ante situaciones adversas.')
 
-# for testing purposes
-#st.write('Class 0 prediction', prediction_ti[0][0])
-#st.write('Class 1 prediction', prediction_ti[0][1])
-#st.write('Class 0 bias (trainset prior)', bias[0][0])
-#st.write('Class 1 bias (trainset prior)', bias[0][1])
-#st.write('Feature contributions (with bias and total probability added):', fig_y)
+	# for testing purposes
+	#st.write('Class 0 prediction', prediction_ti[0][0])
+	#st.write('Class 1 prediction', prediction_ti[0][1])
+	#st.write('Class 0 bias (trainset prior)', bias[0][0])
+	#st.write('Class 1 bias (trainset prior)', bias[0][1])
+	#st.write('Feature contributions (with bias and total probability added):', fig_y)
 
-fig = go.Figure(go.Waterfall(
-    name = 'Feature contribution', orientation = 'h',
-    measure = ['relative', 'relative', 'relative', 'relative', 'relative', 'relative', 'relative', 'relative', 'relative', 'total'],
-    y = fig_y,
-    textposition = 'outside',
-    text = list(map(str, [round(num, 1) for num in fig_x])),
-    x = fig_x,
-    connector = {'line':{'color':'rgb(63, 63, 63)',
-				         'width': 1},
-				 'visible': False},
-))
+	fig = go.Figure(go.Waterfall(
+		name = 'Feature contribution', orientation = 'h',
+		measure = ['relative', 'relative', 'relative', 'relative', 'relative', 'relative', 'relative', 'relative', 'relative', 'total'],
+		y = fig_y,
+		textposition = 'outside',
+		text = list(map(str, [round(num, 1) for num in fig_x])),
+		x = fig_x,
+		connector = {'line':{'color':'rgb(63, 63, 63)',
+							'width': 1},
+					'visible': False},
+	))
 
-fig.update_yaxes(autorange = 'reversed', fixedrange = True)
-fig.update_xaxes(range = [0, 100], fixedrange = True)
-fig.update_layout(
-        title = 'Impacto de los factores en la estimación del score de resiliencia',
-        showlegend = False,
-		hovermode = 'y',
-		xaxis_ticksuffix= '%'
-)
-fig.update_traces(hovertemplate = '%{y}: %{text}%<extra></extra>',
-				  texttemplate='%{text}%')
+	fig.update_yaxes(autorange = 'reversed', fixedrange = True)
+	fig.update_xaxes(range = [0, 100], fixedrange = True)
+	fig.update_layout(
+			title = 'Impacto de los factores en la estimación del score de resiliencia',
+			showlegend = False,
+			hovermode = 'y',
+			xaxis_ticksuffix= '%'
+	)
+	fig.update_traces(hovertemplate = '%{y}: %{text}%<extra></extra>',
+					texttemplate='%{text}%')
 
-st.write('A continuación se muestra un gráfico que resume la contribución de cada factor:')
+	st.write('A continuación se muestra un gráfico que resume la contribución de cada factor:')
 
-config = {'displayModeBar': False}
-st.plotly_chart(fig, use_container_width = True, config = config)
+	config = {'displayModeBar': False}
+	st.plotly_chart(fig, use_container_width = True, config = config)
